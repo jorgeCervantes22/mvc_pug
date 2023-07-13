@@ -1,0 +1,51 @@
+<%- include('layout.ejs'); %>
+<div class="container">
+<div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <h2>NODE.JS MVC</h2>  
+                        <div class="card">
+                            <div class="card-header">Login</div>
+                            <div class="card-body">
+
+                                <div class="container">
+                                    <h2>Actually Products On Stock</h2>
+                                    <a href="/tableStructure"> <button type="submit" class="btn btn-active btn-lg btn-block login-button">back</button> </a>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% productos.forEach(element=> { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= element.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= element.Description %>
+                                                    </td>
+                                                    <td>
+                                                        <%= element.Price %>
+                                                    </td>
+                                                    <td>
+                                                        <%= element.date%>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+</div>
+
+</body>
+</html>

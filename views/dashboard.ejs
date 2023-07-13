@@ -1,0 +1,18 @@
+<%- include('layout.ejs'); %>
+<div class="container">
+    <div class="row justify-content-center">
+        <h3>Hi <%= user.name %> </h3> &nbsp;
+        <h3>welcome </h3> <br>
+    </div>
+</div>
+<div>
+
+    <a href="/tableStructure"> <button type="submit" class="btn btn-active btn-lg btn-block login-button">Products</button> </a>
+
+    <a href="/createProduct"> <button type="submit" class="btn btn-active btn-lg btn-block login-button">Create Products</button> </a>
+    <a href="/createMultipleProduct"> <button type="submit" class="btn btn-active btn-lg btn-block login-button">Create Multiple Products</button> </a>
+    <a href="/createClient"> <button type="submit" class="btn btn-active btn-lg btn-block login-button">Insertar cliente</button> </a>
+    <a href="/logout"> <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Logout</button> </a>
+</div>
+</body>
+</html>
