@@ -16,7 +16,7 @@ router.get("/createProduct", protectRoute, ProductsController.getClients)
 
 router.post("/createProduct", protectRoute, ProductsController.createProduct)
 
-router.get("/createMultipleProduct", protectRoute, MultipleProductView)
+router.get("/createMultipleProduct", protectRoute, ProductsController.getClientsforMultipleFiles)
 router.post("/createMultipleProduct", protectRoute, ProductsController.createMultipleProducts)
 
 router.get("/createClient", protectRoute, ClientView)

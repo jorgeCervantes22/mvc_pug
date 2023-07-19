@@ -4,6 +4,8 @@ const cheerio = require('cheerio');
 const mongoose = require('mongoose')
 const products = require('../models/Products')
 var fs = require('fs');
+const readXlsxFile = require('read-excel-file');
+const { json } = require('express');
 
 // const htmlProducto = require('../views/createProduct')
 // const { Response } = require('../common/response');
@@ -23,17 +25,18 @@ module.exports.ProductsController = {
         }
     },
 
-    getClients: async (req,res) =>{
-        try{
+    getClients: async (req, res) => {
+        try {
             let allClients = await ProductsService.getClients();
             // console.log(allClients)
-            res.render("createProduct",{
+            res.render("createProduct", {
                 clientes: allClients
             });
-        }catch(e){
+        } catch (e) {
             console.log(e)
         }
     },
+    
     createProduct: async (req, res) => {
         try {
             const { body } = req;
@@ -44,48 +47,53 @@ module.exports.ProductsController = {
             } else {
                 await ProductsService.create(body);
                 let allClients = await ProductsService.getClients();
-                res.render("createProduct",{clientes: allClients})
+                res.render("createProduct", { clientes: allClients })
             }
-           
+
         } catch (error) {
             console.log(error)
         }
     },
-
-
     getProductByEmail: async (req, res) => {
         try {
-          const resultado = await products.aggregate([
-            {
-                $lookup:
+            const resultado = await products.aggregate([
                 {
-                    from:"clients",
-                    localField:"clientId",
-                    foreignField:"_id",
-                    as:"cliente"
-                }
-            },
-            { $unwind: "$cliente" }
+                    $lookup:
+                    {
+                        from: "clients",
+                        localField: "clientId",
+                        foreignField: "_id",
+                        as: "cliente"
+                    }
+                },
+                { $unwind: "$cliente" }
 
-          ])
-          console.log(resultado)
+            ])
+            console.log(resultado)
         } catch (error) {
             console.log(error)
         }
     },
-
-
-
-
-
-    createMultipleProducts: async(req, res) =>{
-        let lol = req.body
-        console.log(__dirname)//Eliminar
-        console.log(lol.file);
+    getClientsforMultipleFiles: async (req,res)=>{
         try {
-            let products = await ProductsService.createMultiple(lol.file);
-            // res.render("tableStructure",{
-            //     productos: products
+            let allClients = await ProductsService.getClients();
+            res.render("createMultipleProduct", {
+                clientes: allClients
+            });
+        } catch (e) {
+            console.log(e)
+        }
+    },
+    createMultipleProducts: async (req, res) => {
+        try {
+            let body = req.body
+            let clientId = body.clientId
+            let jsonData = JSON.parse(body.datArray)  
+            let uniqueData = jsonData.splice(1)         
+            console.log(uniqueData)
+            // let products = await ProductsService.createMultiple(lol);
+            // res.render("createMultipleProduct",{
+            //     // productos: products
             // });
             // Response.success(res, 200, 'Lista de productos', products)
         } catch (error) {

@@ -1,19 +1,68 @@
 <%- include('layout.ejs'); %>
-<div class="container">
-    <form class="form-horizontal" method="post" action="/createMultipleProduct">
-<div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <h2>Crear Producto</h2>  
-                        <div class="card">
-                            <div class="card-header">Seleccione un archivo .xlsx</div>
-                            <input type="file" name="file" id="file">
+    <header>
+        <script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
+    </header>
+    <div class="container">
+        <form class="form-horizontal" method="post" action="/createMultipleProduct">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2>Crear Producto</h2>
+                    <div class="form-group">
+                        <label for="client" class="cols-sm-2 control-label">Cliente</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa"
+                                        aria-hidden="true"></i></span>
+                                <label for="clients">Choose your client from the list: </label><br><br>
+                                <select name="clientId" id="clientId">
+                                    <% if(clientes !=null){ %>
+                                        <% clientes.forEach(element=> { %>
+                                            <option value=<%=element._id%>>
+                                                <%= element.name %>
+                                            </option>
+                                            <% }); %>
+                                                <% }%>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    
+                    <div class="card">
+                        <div class="card-header">Seleccione un archivo .xlsx</div>
+                        <input type="file" name="file" id="file">
+                        <input type="text[]" name="datArray" id="datArray" hidden>
+                    </div>
                 </div>
-</div>
-<div class="form-group ">
-    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Crear Producto</button>
-</div>
-</form>
-</body>
-</html>
+            </div>
+    </div>
+    <div class="form-group ">
+        <button type="submit" id="buttonId" class="btn btn-primary btn-lg btn-block login-button">Crear
+            Producto</button>
+    </div>
+    </form>
+    <script>
+        document.getElementById("file").addEventListener("change", () => {
+            const response = document.getElementById('file').files[0]
+            //XLSX
+            readXlsxFile(response).then((data) => {
+                const array = []
+                var contador = 0
+                data.forEach(element => {
+                    if (contador > 0) {
+                        // console.log(element)
+                        array.push(element)
+                        contador++
+                    }
+                    contador++
+                });
+
+
+                document.getElementById('datArray').value = JSON.stringify(array)
+            })
+        });
+    </script>
+
+    </script>
+    </body>
+
+    </html>
